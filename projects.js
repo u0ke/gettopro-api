@@ -36,7 +36,7 @@ router.post("/", (req, res) => {
     res.status(201).json(projects);
 });
 
-router.get("/", (req, res) => {
+router.get("/:id", (req, res) => {
     const { id } = req.params;
     const project = projects.find((p) => p.id === Number(id));
     if (!project) {
@@ -45,7 +45,7 @@ router.get("/", (req, res) => {
     res.json(project);
 });
 
-router.delete("/", (req, res) => {
+router.delete("/:id", (req, res) => {
     const { id } = req.params;
     const projectIndex = projects.findIndex((p) => p.id === Number(id));
     if (projectIndex === -1) {
