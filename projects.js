@@ -1,4 +1,7 @@
 import {router} from "express";
+import 'dotenv/config';
+
+
 const router = Router();
 
 let projects = [
@@ -15,11 +18,11 @@ let projects = [
     },
 ];
 
-router.get("/projects", (req, res) => {
+router.get("/", (req, res) => {
     res.status(200).json(projects);
 });
 
-router.post("/projects", (req, res) => {
+router.post("/", (req, res) => {
     const { name } = req.body;
     if (!name) {
         return res.status(400).json({ message: "invalid data" });
@@ -32,3 +35,24 @@ router.post("/projects", (req, res) => {
     projects.push(newProject);
     res.status(201).json(projects);
 });
+
+router.get("/", (req, res) => {
+    const { id } = req.params;
+    const project = projects.find((p) => p.id === Number(id));
+    if (!project) {
+        return res.status(404).json({ message: "Project not found" });
+    }
+    res.json(project);
+});
+
+router.delete("/", (req, res) => {
+    const { id } = req.params;
+    const projectIndex = projects.findIndex((p) => p.id === Number(id));
+    if (projectIndex === -1) {
+        return res.status(404).json({ message: "Project not found" });
+    }
+    projects.splice(projectIndex, 1);
+    res.status(200).json({ message: "Project deleted" });
+});
+
+export default router;
