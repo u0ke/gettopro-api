@@ -11,5 +11,5 @@ app.use("/projects", projectsRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log("server is UP on 3000");
+    console.log(`server is UP on ${PORT}`);
 });
